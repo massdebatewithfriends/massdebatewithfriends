@@ -171,16 +171,68 @@
     </div>
     <div class="wink">yes — say the name out loud. that’s the whole audition.</div>
 
-    <!-- Live-ish demo: the game argues with itself while you decide -->
-    <div class="demo" aria-hidden="true">
-      <div class="demo-kicker">Tonight's opening argument</div>
-      <div class="demo-topic" id="demoTopic">“Pineapple on pizza is a war crime.”</div>
-      <div class="demo-bubbles">
-        <div class="demo-bubble left" id="demoQuipA">Sweet + salty is literally civilisation.</div>
-        <div class="demo-bubble right" id="demoQuipB">Hot fruit. HOT. FRUIT.</div>
+    <!-- Feature carousel: six mini-demos of the show, dots + auto-advance -->
+    <div class="demo" id="featureDemo" aria-hidden="true">
+
+      <div class="fslide active">
+        <div class="demo-kicker">Tonight's opening argument</div>
+        <div class="demo-topic" id="demoTopic">“Pineapple on pizza is a war crime.”</div>
+        <div class="demo-bubbles">
+          <div class="demo-bubble left" id="demoQuipA">Sweet + salty is literally civilisation.</div>
+          <div class="demo-bubble right" id="demoQuipB">Hot fruit. HOT. FRUIT.</div>
+        </div>
+        <div class="demo-meter"><div class="demo-fill" id="demoFill"></div><div class="demo-needle" id="demoNeedle"></div></div>
+        <div class="demo-labels"><span>AGREE</span><span class="demo-sway">the room is swaying…</span><span>DISAGREE</span></div>
       </div>
-      <div class="demo-meter"><div class="demo-fill" id="demoFill"></div><div class="demo-needle" id="demoNeedle"></div></div>
-      <div class="demo-labels"><span>AGREE</span><span class="demo-sway">the room is swaying…</span><span>DISAGREE</span></div>
+
+      <div class="fslide">
+        <div class="demo-kicker">The wheel deals the topic</div>
+        <div class="fw-topics"><span>“Is cereal soup?”</span><span>“Ban open-plan offices.”</span><span>“Cats outrank dogs.”</span></div>
+        <div class="fw-wrap"><div class="fw-pointer">▼</div><div class="fw-wheel"></div></div>
+        <div class="fcap">SPIN → CLAIM YOUR SIDE → FIGHT</div>
+      </div>
+
+      <div class="fslide">
+        <div class="demo-kicker">Mass Debate — team vs team</div>
+        <div class="ft-row">
+          <div class="ft-team"><div class="ft-seat ft-frontL">😤</div><div class="ft-seat ft-benchL">😏</div></div>
+          <div class="ft-mid">
+            <div class="ft-bub ta">We planned this in private team chat.</div>
+            <div class="ft-bub tb">Tag me in — they’re going soft!</div>
+          </div>
+          <div class="ft-team"><div class="ft-seat ft-frontR">🤨</div><div class="ft-seat ft-benchR">😈</div></div>
+        </div>
+        <div class="fcap">TAG-TEAM SWAPS — fresh legs mid-debate</div>
+      </div>
+
+      <div class="fslide">
+        <div class="demo-kicker">Circle Jerks — one hot seat</div>
+        <div class="fc-wrap">
+          <div class="fc-ring">
+            <div class="fc-sat s1">🪓</div><div class="fc-sat s2">😾</div><div class="fc-sat s3">🥊</div><div class="fc-sat s4">🧨</div><div class="fc-sat s5">👺</div>
+          </div>
+          <div class="fc-center">😅</div>
+        </div>
+        <div class="fcap">DEFEND YOUR CLAIM — OUTLAST THE YANKS</div>
+      </div>
+
+      <div class="fslide">
+        <div class="fa-mic">🎙</div>
+        <div class="demo-kicker">AI announcer, any voice you clone</div>
+        <div class="fa-line la">“Bold words from someone who microwaves steak.”</div>
+        <div class="fa-line lb">“The sway meter says: nobody is buying it.”</div>
+        <div class="fcap">COMMENTARY, ROASTS &amp; PLAY-BY-PLAY</div>
+      </div>
+
+      <div class="fslide">
+        <div class="demo-kicker">The crowd fights back</div>
+        <div class="fq-b q1">“Source: trust me bro?”</div>
+        <div class="fq-b q2">“Explain the crust, coward.”</div>
+        <div class="fq-b q3">“Sway meter says wrap it up.”</div>
+        <div class="fcap">LIVE Q&amp;A, STANCE VOTES &amp; HECKLING</div>
+      </div>
+
+      <div class="fdots" id="fdots"></div>
     </div>
   </div>
 </header>
@@ -220,10 +272,17 @@
   .demo-kicker { font-size: 10px; letter-spacing: .25em; text-transform: uppercase; color: #FFE066; opacity: .8; font-weight: 700; }
   .demo-topic { font-weight: 800; font-size: 20px; margin: 6px 0 12px; min-height: 54px; transition: opacity .35s, transform .35s; }
   .demo-topic.swap { opacity: 0; transform: translateY(6px); }
-  .demo-bubbles { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
-  .demo-bubble { max-width: 78%; padding: 8px 12px; border-radius: 14px; font-size: 13.5px; line-height: 1.35; transition: opacity .35s, transform .35s; }
-  .demo-bubble.left { align-self: flex-start; background: rgba(255,153,0,.14); border: 1px solid rgba(255,153,0,.4); border-bottom-left-radius: 4px; }
-  .demo-bubble.right { align-self: flex-end; background: rgba(255,224,102,.12); border: 1px solid rgba(255,224,102,.4); border-bottom-right-radius: 4px; }
+  .demo-bubbles { display: flex; flex-direction: column; gap: 14px; margin-bottom: 18px; }
+  /* SPEECH bubbles, not texting boxes — this game is played out loud. */
+  .demo-bubble { position: relative; max-width: 78%; padding: 8px 12px; border-radius: 16px; font-size: 13.5px; line-height: 1.35; transition: opacity .35s, transform .35s; }
+  .demo-bubble.left { align-self: flex-start; background: rgba(255,153,0,.14); border: 1px solid rgba(255,153,0,.4); }
+  .demo-bubble.right { align-self: flex-end; background: rgba(255,224,102,.12); border: 1px solid rgba(255,224,102,.4); }
+  .demo-bubble::after { content: ''; position: absolute; bottom: -9px; width: 0; height: 0; border: 9px solid transparent; border-bottom: 0; }
+  .demo-bubble.left::after { left: 16px; border-top-color: rgba(255,153,0,.45); border-left-width: 3px; border-right-width: 12px; }
+  .demo-bubble.right::after { right: 16px; border-top-color: rgba(255,224,102,.45); border-right-width: 3px; border-left-width: 12px; }
+  .demo-bubble.left::before, .demo-bubble.right::before { position: absolute; bottom: -22px; font-size: 11px; opacity: .6; }
+  .demo-bubble.left::before { content: '🗣'; left: 0; }
+  .demo-bubble.right::before { content: '🗣'; right: 0; transform: scaleX(-1); }
   .demo-bubble.swap { opacity: 0; transform: translateY(6px); }
   .demo-meter { position: relative; height: 10px; border-radius: 5px; background: linear-gradient(90deg, #FF9900, #2a2a2a 50%, #FFE066); overflow: visible; }
   .demo-fill { position: absolute; inset: 0; border-radius: 5px; }
@@ -232,7 +291,79 @@
   .demo-labels { display: flex; justify-content: space-between; font-size: 9px; letter-spacing: .2em; color: rgba(255,255,255,.45); margin-top: 8px; font-weight: 700; }
   .demo-sway { color: #FFE066; opacity: .7; animation: demopulse 2.4s ease-in-out infinite; }
   @keyframes demopulse { 0%,100% { opacity: .35; } 50% { opacity: .9; } }
-  @media (prefers-reduced-motion: reduce) { .demo-needle, .demo-sway { animation: none; } }
+  /* ── Feature carousel ── */
+  .fslide { display: none; }
+  .fslide.active { display: block; animation: fsin .45s ease; }
+  @keyframes fsin { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .fcap { margin-top: 14px; font-size: 9px; letter-spacing: .22em; font-weight: 800; color: rgba(255,255,255,.45); text-align: center; text-transform: uppercase; }
+  .fdots { display: flex; justify-content: center; gap: 8px; margin-top: 14px; }
+  .fdots button { width: 8px; height: 8px; border-radius: 50%; border: 0; padding: 0; background: rgba(255,255,255,.18); cursor: pointer; transition: transform .2s, background .2s; }
+  .fdots button:hover { background: rgba(255,255,255,.4); }
+  .fdots button.on { background: #FF9900; transform: scale(1.35); }
+
+  /* Wheel slide */
+  .fw-topics { position: relative; height: 30px; text-align: center; font-weight: 800; font-size: 18px; }
+  .fw-topics span { position: absolute; inset: 0; opacity: 0; animation: fwtopic 6.3s infinite; }
+  .fw-topics span:nth-child(2) { animation-delay: 2.1s; }
+  .fw-topics span:nth-child(3) { animation-delay: 4.2s; }
+  @keyframes fwtopic { 0% { opacity: 0; transform: translateY(8px) scale(.94); } 6% { opacity: 1; transform: none; } 30% { opacity: 1; } 36% { opacity: 0; transform: translateY(-6px); } 100% { opacity: 0; } }
+  .fw-wrap { position: relative; width: 128px; margin: 10px auto 2px; }
+  .fw-pointer { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); color: #fff; font-size: 14px; z-index: 2; text-shadow: 0 2px 6px rgba(0,0,0,.8); }
+  .fw-wheel { width: 128px; height: 128px; border-radius: 50%; border: 3px solid rgba(255,255,255,.18);
+    background: conic-gradient(#FF9900 0 60deg, #1f1f1f 60deg 120deg, #FFE066 120deg 180deg, #2a2a2a 180deg 240deg, #b86b00 240deg 300deg, #161616 300deg 360deg);
+    animation: fwspin 6.3s cubic-bezier(.16,.84,.28,1) infinite; box-shadow: 0 0 30px rgba(255,153,0,.25); }
+  @keyframes fwspin { 0% { transform: rotate(0); } 55% { transform: rotate(1173deg); } 78% { transform: rotate(1436deg); } 100% { transform: rotate(1440deg); } }
+
+  /* Tag-team slide */
+  .ft-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 8px; }
+  .ft-team { position: relative; width: 54px; height: 108px; }
+  .ft-seat { position: absolute; left: 4px; width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; background: #1f1f1f; border: 2px solid rgba(255,153,0,.5); }
+  .ft-frontL, .ft-frontR { top: 0; z-index: 2; }
+  .ft-benchL, .ft-benchR { top: 58px; opacity: .55; filter: saturate(.6); }
+  .ft-frontR, .ft-benchR { border-color: rgba(255,224,102,.5); }
+  .ft-frontL { animation: ftToBench 8s ease-in-out infinite; }
+  .ft-benchL { animation: ftToFront 8s ease-in-out infinite; }
+  .ft-frontR { animation: ftToBench 8s ease-in-out infinite 4s; }
+  .ft-benchR { animation: ftToFront 8s ease-in-out infinite 4s; }
+  @keyframes ftToBench { 0%, 22% { top: 0; opacity: 1; filter: none; } 34%, 88% { top: 58px; opacity: .55; filter: saturate(.6); } 96%, 100% { top: 0; opacity: 1; filter: none; } }
+  @keyframes ftToFront { 0%, 22% { top: 58px; opacity: .55; filter: saturate(.6); } 34%, 88% { top: 0; opacity: 1; filter: none; } 96%, 100% { top: 58px; opacity: .55; filter: saturate(.6); } }
+  .ft-mid { flex: 1; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .ft-bub { padding: 7px 11px; border-radius: 14px; font-size: 12.5px; line-height: 1.3; opacity: .25; }
+  .ft-bub.ta { align-self: flex-start; background: rgba(255,153,0,.14); border: 1px solid rgba(255,153,0,.4); animation: ftbub 8s infinite; }
+  .ft-bub.tb { align-self: flex-end; background: rgba(255,224,102,.12); border: 1px solid rgba(255,224,102,.4); animation: ftbub 8s infinite 4s; }
+  @keyframes ftbub { 0%, 8% { opacity: .25; } 14%, 40% { opacity: 1; } 50%, 100% { opacity: .25; } }
+
+  /* Circle slide */
+  .fc-wrap { position: relative; width: 150px; height: 150px; margin: 6px auto 0; }
+  .fc-ring { position: absolute; inset: 0; animation: fcspin 14s linear infinite; }
+  @keyframes fcspin { to { transform: rotate(360deg); } }
+  .fc-sat { position: absolute; top: 50%; left: 50%; width: 38px; height: 38px; margin: -19px; border-radius: 50%; background: #1f1f1f; border: 2px solid rgba(255,255,255,.25); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .fc-sat.s1 { transform: rotate(0deg) translateY(-58px); }
+  .fc-sat.s2 { transform: rotate(72deg) translateY(-58px); }
+  .fc-sat.s3 { transform: rotate(144deg) translateY(-58px); }
+  .fc-sat.s4 { transform: rotate(216deg) translateY(-58px); }
+  .fc-sat.s5 { transform: rotate(288deg) translateY(-58px); }
+  .fc-center { position: absolute; top: 50%; left: 50%; width: 52px; height: 52px; margin: -26px; border-radius: 50%; background: #291a05; border: 3px solid #FF9900; display: flex; align-items: center; justify-content: center; font-size: 26px; animation: fcpulse 2.2s ease-in-out infinite; box-shadow: 0 0 26px rgba(255,153,0,.4); }
+  @keyframes fcpulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.09); } }
+
+  /* Announcer slide */
+  .fa-mic { text-align: center; font-size: 34px; animation: fcpulse 2s ease-in-out infinite; }
+  .fa-line { text-align: center; font-size: 15.5px; font-weight: 700; margin-top: 10px; min-height: 24px; opacity: 0; }
+  .fa-line.la { animation: faline 7s infinite; }
+  .fa-line.lb { animation: faline 7s infinite 3.5s; margin-top: 4px; font-weight: 400; color: rgba(255,255,255,.7); }
+  @keyframes faline { 0% { opacity: 0; transform: translateY(6px); } 7%, 43% { opacity: 1; transform: none; } 50%, 100% { opacity: 0; } }
+
+  /* Q&A slide */
+  .fq-b { max-width: 75%; padding: 8px 12px; border-radius: 14px; font-size: 13px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.18); margin-top: 8px; opacity: 0; animation: fqpop 6.9s infinite; }
+  .fq-b.q1 { animation-delay: .2s; }
+  .fq-b.q2 { margin-left: auto; border-color: rgba(255,153,0,.4); background: rgba(255,153,0,.1); animation-delay: 1.4s; }
+  .fq-b.q3 { border-color: rgba(255,224,102,.4); background: rgba(255,224,102,.08); animation-delay: 2.6s; }
+  @keyframes fqpop { 0% { opacity: 0; transform: translateY(10px) scale(.92); } 5% { opacity: 1; transform: translateY(-2px) scale(1.02); } 8% { transform: none; } 78% { opacity: 1; } 88%, 100% { opacity: 0; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .demo-needle, .demo-sway, .fw-wheel, .fw-topics span, .ft-seat, .ft-bub, .fc-ring, .fc-center, .fa-mic, .fa-line, .fq-b, .fslide.active { animation: none; }
+    .fw-topics span:first-child, .ft-bub, .fa-line, .fq-b { opacity: 1; }
+  }
 
   /* Play tiles */
   #play .playtiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; margin-top: 18px; }
@@ -285,6 +416,32 @@
       el.value = el.value.toUpperCase().replace(/[^A-HJ-NP-Z2-9]/g, '');
       if (el.value.length === 4) goCode({ preventDefault: function () {} });
     });
+  })();
+  // Feature carousel: dots + auto-advance, pause while the cursor hovers.
+  (function () {
+    var card = document.getElementById('featureDemo');
+    var dotsWrap = document.getElementById('fdots');
+    if (!card || !dotsWrap) return;
+    var slides = [].slice.call(card.querySelectorAll('.fslide'));
+    var cur = 0, timer = null;
+    slides.forEach(function (_, i) {
+      var d = document.createElement('button');
+      d.type = 'button';
+      d.setAttribute('aria-label', 'Feature ' + (i + 1));
+      d.addEventListener('click', function () { go(i); reset(); });
+      dotsWrap.appendChild(d);
+    });
+    var dots = [].slice.call(dotsWrap.children);
+    function go(i) {
+      slides[cur].classList.remove('active'); dots[cur].classList.remove('on');
+      cur = i;
+      slides[cur].classList.add('active'); dots[cur].classList.add('on');
+    }
+    function next() { go((cur + 1) % slides.length); }
+    function reset() { if (timer) clearInterval(timer); timer = setInterval(next, 6500); }
+    go(0); reset();
+    card.addEventListener('mouseenter', function () { if (timer) clearInterval(timer); timer = null; });
+    card.addEventListener('mouseleave', reset);
   })();
 </script>
 
