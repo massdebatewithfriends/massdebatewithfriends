@@ -1,25 +1,21 @@
 {
   "name": "MassDebate with Friends",
   "short_name": "MassDebate",
-  "description": "Type the room code from the host screen, then play on your phone as a controller or watch the big screen as a viewer.",
+  "description": "Type the room code from the host screen and jump into the debate from your phone.",
   "start_url": "/",
-  "scope": "/",
   "display": "standalone",
-  "orientation": "portrait",
   "background_color": "#090909",
-  "theme_color": "#FF9900",
+  "theme_color": "#090909",
   "icons": [
     {
       "src": "/icon-192.png",
       "type": "image/png",
-      "sizes": "192x192",
-      "purpose": "any maskable"
+      "sizes": "192x192"
     },
     {
       "src": "/icon-512.png",
       "type": "image/png",
-      "sizes": "512x512",
-      "purpose": "any maskable"
+      "sizes": "512x512"
     }
   ]
 }
